@@ -55,7 +55,5 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
     #symbols = ['BTC/USD', 'ETH/USD', 'DOGE/USD']
     
