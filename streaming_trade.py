@@ -1,29 +1,34 @@
 import configparser
-from alpaca_trade_api.stream import Stream
 import logging
+import asyncio
+from alpaca_trade_api.stream import Stream
 
 class AlpacaStream:
-    def __init__(self, config_path):
+    def __init__(self, config_path, symbols):
         self.config = configparser.ConfigParser()
         self.config.read(config_path)
         self.api_key = self.config.get('alpaca', 'API_KEY')
         self.api_secret = self.config.get('alpaca', 'SECRET_KEY')
+        self.symbols = symbols
         self.stream = None
 
     async def log_quote(self, q):
-        logging.info('quote %s', q)
+        symbol = q['S']
+        symbol = symbol.lower().replace('/', '')
+        logger = logging.getLogger(symbol)
+        logger.info('quote %s', q)
 
     async def log_trade(self, t):
-        logging.info('trade %s', t)
+        symbol = t['S']
+        symbol = symbol.lower().replace('/', '')
+        logger = logging.getLogger(symbol)
+        logger.info('trade %s', t)
 
     def start_stream(self):
+        self.initialize_loggers()
         self.stream = Stream(self.api_key, self.api_secret, raw_data=True)
-        self.stream.subscribe_crypto_quotes(self.log_quote, 'BTC/USD')
-        self.stream.subscribe_crypto_trades(self.log_trade, 'BTC/USD')
-
-        # @self.stream.on_bar('BTC/USD')
-        # async def _(bar):
-        #     print('bar', bar)
+        self.subscribe_quotes()
+        self.subscribe_trades()
 
         self.stream.run()
 
@@ -31,10 +36,24 @@ class AlpacaStream:
         if self.stream:
             self.stream.close()
 
-def main():
-    logging.basicConfig(filename="trade_quote_log", level = logging.INFO)
-    alpaca_stream = AlpacaStream('config.ini')
-    alpaca_stream.start_stream()
+    def initialize_loggers(self):
+        for symbol in self.symbols:
+            symbol = symbol.lower().replace('/', '')
+            logger = logging.getLogger(symbol)
+            logger.setLevel(logging.INFO)
+            handler = logging.FileHandler(f"{symbol}.log")
+            formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+            handler.setFormatter(formatter)
+            logger.addHandler(handler)
 
-if __name__ == '__main__':
-    main()
+    def subscribe_quotes(self):
+        for symbol in self.symbols:
+            self.stream.subscribe_crypto_quotes(self.log_quote, symbol)
+
+    def subscribe_trades(self):
+        for symbol in self.symbols:
+            self.stream.subscribe_crypto_trades(self.log_trade, symbol)
+
+
+
+

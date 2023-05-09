@@ -3,7 +3,6 @@ import alpaca_trade_api as tradeapi
 import configparser
 import csv
 from alpaca.data.live import CryptoDataStream
-import argparse
 
 class DataCollector:
     def __init__(self, config_path, symbols):
@@ -41,19 +40,4 @@ class DataCollector:
             self.crypto_stream.subscribe_bars(self.bar_callback, symbol)
         self.crypto_stream.run()
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--symbols', nargs='+', help='Trading symbols (e.g., BTC/USD ETH/USD)')
-    args = parser.parse_args()
-
-    if not args.symbols:
-        print('Please provide trading symbols.')
-        return
-
-    data_collector = DataCollector('config.ini', args.symbols)
-    data_collector.run()
-
-if __name__ == "__main__":
-    main()
-    #symbols = ['BTC/USD', 'ETH/USD', 'DOGE/USD']
     
