@@ -2,6 +2,7 @@ import asyncio
 import alpaca_trade_api as tradeapi
 import configparser
 import csv
+import os
 from alpaca.data.live import CryptoDataStream
 
 class DataCollector:
@@ -22,7 +23,7 @@ class DataCollector:
     async def bar_callback(self, bar):
         row = [value for _, value in bar]
         symbol = row[0].lower().replace('/', '')
-        filename = f"{symbol}_bar_data.csv"
+        filename = os.path.join("price_bar_minute", f"{symbol}_bar_data.csv")
 
         with open(filename, 'a', newline='') as csvfile:
             writer = csv.writer(csvfile)
@@ -35,9 +36,14 @@ class DataCollector:
             writer.writerow(row)
 
     def run(self):
+        log_folder = "price_bar_minute"
+        if not os.path.exists(log_folder):
+            os.makedirs(log_folder)
+
         self.crypto_stream = CryptoDataStream(self.api_key, self.api_secret)
         for symbol in self.symbols:
             self.crypto_stream.subscribe_bars(self.bar_callback, symbol)
         self.crypto_stream.run()
+
 
     

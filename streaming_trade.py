@@ -1,3 +1,4 @@
+import os
 import configparser
 import logging
 import asyncio
@@ -32,17 +33,20 @@ class AlpacaStream:
 
         self.stream.run()
 
-
     def stop_stream(self):
         if self.stream:
             self.stream.close()
 
     def initialize_loggers(self):
+        log_folder = "logging"
+        if not os.path.exists(log_folder):
+            os.makedirs(log_folder)
+
         for symbol in self.symbols:
             symbol = symbol.lower().replace('/', '')
             logger = logging.getLogger(symbol)
             logger.setLevel(logging.INFO)
-            handler = logging.FileHandler(f"{symbol}.log")
+            handler = logging.FileHandler(os.path.join(log_folder, f"{symbol}.log"))
             formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
             handler.setFormatter(formatter)
             logger.addHandler(handler)
@@ -54,6 +58,7 @@ class AlpacaStream:
     def subscribe_trades(self):
         for symbol in self.symbols:
             self.stream.subscribe_crypto_trades(self.log_trade, symbol)
+
 
 
 
