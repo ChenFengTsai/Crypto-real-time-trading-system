@@ -32,6 +32,7 @@ class AlpacaStream:
 
         self.stream.run()
 
+
     def stop_stream(self):
         if self.stream:
             self.stream.close()
