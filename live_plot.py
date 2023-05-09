@@ -84,10 +84,3 @@ class AlpacaStream_Plot(AlpacaStream):
 
         self.stream.run()
 
-# def main():
-#     symbols = ['BTC/USD', 'ETH/USD']  # Add or modify the symbols as needed
-#     alpaca_stream_plot = AlpacaStream_Plot('config.ini', symbols)
-#     alpaca_stream_plot.start_stream()
-
-# if __name__ == '__main__':
-#     main()
