@@ -113,7 +113,7 @@ async def post_alpaca_order(side):
            return buy_order
        else:
            market_order_data = MarketOrderRequest(
-               symbol="ETHUSD",
+               symbol="BTC/USD",
                qty=current_position,
                side=OrderSide.SELL,
                time_in_force=TimeInForce.GTC
@@ -130,7 +130,7 @@ def get_positions():
    positions = trading_client.get_all_positions()
    global current_position
    for p in positions:
-       if p.symbol == 'ETHUSD':
+       if p.symbol == "BTC/USD":
            current_position = p.qty
            return current_position
    return current_position
