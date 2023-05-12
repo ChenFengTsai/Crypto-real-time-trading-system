@@ -2,6 +2,7 @@ import tensorflow as tf
 from tensorflow import keras
 from keras.layers import *
 from keras.models import *
+import numpy as np
 
 class Time2Vector(Layer):
     def __init__(self, seq_len, **kwargs):
