@@ -16,6 +16,7 @@ def main():
     if args.func == 'stream':
         alpaca_stream = AlpacaStream('config.ini', args.symbols)
         alpaca_stream.start_stream()
+        
     elif args.func == 'collector':
         data_collector = DataCollector('config.ini', args.symbols)
         data_collector.run()

@@ -15,7 +15,7 @@ import asyncio
 import configparser
 from transformer_model import load_model
 
-
+# ? dfdfdfd
 # ENABLE LOGGING - options, DEBUG,INFO, WARNING?
 
 logging.basicConfig(level=logging.INFO,
@@ -29,7 +29,7 @@ config.read('config.ini')
 
 api_key = config.get('alpaca', 'api_key')
 api_secret = config.get('alpaca', 'api_secret')
-base_url = 'https://paper-api.alpaca.markets'
+#base_url = 'https://paper-api.alpaca.markets'
 
 trading_client = TradingClient(api_key, api_secret, paper=True)
 
@@ -45,9 +45,11 @@ data = 0
 current_position, current_price = 0, 0
 predicted_price = 0
 
+
 async def main():
     '''
     Function to get latest asset data and check possible trade conditions
+    
     '''
     # closes all position AND also cancels all open orders
     # trading_client.close_all_positions(cancel_orders=True)
