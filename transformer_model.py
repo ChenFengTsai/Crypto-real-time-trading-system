@@ -3,8 +3,6 @@ from tensorflow import keras
 from keras.layers import *
 from keras.models import *
 
-
-###### model ########
 class Time2Vector(Layer):
     def __init__(self, seq_len, **kwargs):
         # inherit from Layer
