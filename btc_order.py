@@ -32,14 +32,6 @@ trading_client = TradingClient(api_key, api_secret, paper=True)
 # Trading variables
 qty_to_trade = 1
 
-# Initialization
-# Wait time between each bar request and model training
-waitTime = 3600
-data = 0
-current_position, current_price = 0, 0
-predicted_price = 0
-
-
 async def main(trading_pair):
     '''
     Function to get the latest asset data and check the position trade condition
@@ -60,7 +52,7 @@ async def main(trading_pair):
         l1 = loop.create_task(check_condition(trading_pair))
         await asyncio.wait([l1])
         # operate trading every 1 hour
-        await asyncio.sleep(waitTime)
+        await asyncio.sleep(3600)
 
 
 def predict_func(model, trading_pair):
@@ -102,7 +94,7 @@ def predict_func(model, trading_pair):
     current_input = df.values
 
     # get sequential input with length 128
-    seq_len = 128
+
     seq_input = [current_input[-128:]]
     seq_input = np.array(seq_input)
 
