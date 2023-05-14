@@ -2,13 +2,18 @@ import argparse
 from streaming_trade import AlpacaStream
 from market_minute import DataCollector
 from live_plot import AlpacaStream_Plot
+import subprocess
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--symbols', nargs='+', help='Trading symbols (e.g., BTC/USD ETH/USD)')
-    parser.add_argument('--func', choices=['stream', 'collector', 'plot'], help='Function to run')
+    parser.add_argument('--func', choices=['stream', 'collector', 'plot', 'run_order'], help='Function to run')
+    parser.add_argument('--script', help='Path to the script to run')
     args = parser.parse_args()
 
+    if args.func == 'run_order' and args.script:
+        subprocess.run(['python3', args.script])
+        
     if not args.symbols:
         print('Please provide trading symbols.')
         return

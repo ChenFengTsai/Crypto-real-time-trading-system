@@ -5,11 +5,8 @@ from alpaca.trading.client import TradingClient
 from alpaca.trading.requests import MarketOrderRequest
 from alpaca.trading.enums import OrderSide, TimeInForce
 from datetime import datetime
-from dateutil.relativedelta import relativedelta
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import json
 import logging
 import asyncio
 import configparser
@@ -112,6 +109,7 @@ def predict_func(model, trading_pair):
     # get predicted price
     global predicted_price
     predicted_returns = model.predict(seq_input)
+    predicted_returns = predicted_returns*(max_return - min_return) + min_return
     predicted_price = current_price * (1 + predicted_returns)
     return predicted_price
 
