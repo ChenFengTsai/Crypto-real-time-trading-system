@@ -7,6 +7,9 @@
 ## Tools
 Python, Tensorflow, Alpaca API, asyncio, 
 
+## System Architecture
+![alt text](./system_architecture.png)
+
 ## Structure
 * **main.py:** Trigger streaming, plotting, loading data
 * **market_minute.py:** Extract data in minute timeframe and save them under the price_bar_minute folder
