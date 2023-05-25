@@ -30,7 +30,7 @@ pip install requirements.txt
 ```
 git clone https://github.com/ChenFengTsai/Speech_Emotion_Summary_API.git
 ```
-3. Run different function
+3. Run functions based on your needs
 * Get bar data in minute timeframe with market_minute.py
 ```
 python3 main.py --symbols BTC/USD ETH/USD --func collector
