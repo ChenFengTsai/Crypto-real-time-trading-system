@@ -94,7 +94,6 @@ def predict_func(model, trading_pair):
     current_input = df.values
 
     # get sequential input with length 128
-
     seq_input = [current_input[-128:]]
     seq_input = np.array(seq_input)
 
@@ -110,8 +109,8 @@ async def check_condition(trading_pair):
 
     global current_position, current_price, predicted_price
     current_position = get_positions(trading_pair)
-    logger.info("Current Price is: {0}".format(current_price))
-    logger.info("Current Position is: {0}".format(current_position))
+    logger.info(f"Current Price is: {current_price}")
+    logger.info(f"Current Position is: {current_position}")
 
     # If we do not have a position and the current price is less than the predicted price, place a market buy order
     if float(current_position) <= 0.01 and current_price < predicted_price:
@@ -168,7 +167,8 @@ def get_positions(trading_pair):
         if p.symbol == trading_pair:
             current_position = p.qty
             return current_position
-    return current_position
+    # no position
+    return 0
 
 
 loop = asyncio.get_event_loop()
