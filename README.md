@@ -16,7 +16,7 @@ Python, Tensorflow, Alpaca API, asyncio,
 * **streaming_trade.py:** Extract trade, quotes data in real-time manner and save them under the logging folder
 * **live_plot.py:** Plot the trade data in live
 * **transformer_model.py:** Layers of the BERT + Time embeddings model 
-* **btc_order.py:** Submit order based on predicted price by transformer
+* **btc_order.py:** Submit order based on predicted price by transformer (Reference from https://github.com/alpacahq/plug-and-play-strategies/tree/master/LSTM)
 * **model folder:** The final model is under this folder
 * **requirements.txt:** Required packages is listed in this file
 * **config.ini:** Configuration info is listed in this file
